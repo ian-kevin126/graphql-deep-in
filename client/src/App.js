@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import BookList from './components/BookList'
 import { gql, useQuery, useMutation } from '@apollo/client'
 import { flowRight as compose } from 'lodash'
@@ -60,16 +60,25 @@ function App() {
   //     `,
   //   })
   //   .then((result) => console.log(result))
-  console.log('authorList', authorList?.authors)
+  console.log('bookList', bookList)
 
   // 添加书籍
+  // refetchQueries，请求完之后，使用refetchQueries再次请求列表数据，达到刷新的目的
   const addBooks = () => {
-    addBook({ variables: { name: bookName, genre: bookGenre, authorId } })
+    addBook({
+      variables: { name: bookName, genre: bookGenre, authorId },
+      refetchQueries: [{ query: ALL_BOOKS }],
+    })
   }
+
+  const BookListComponent = useMemo(
+    () => <BookList books={bookList?.books} />,
+    [bookList]
+  )
 
   return (
     <div className="App">
-      <BookList />
+      {BookListComponent}
       <div>
         <label>书籍名称：</label>
         <input onChange={(e) => setBookName(e.target.value)} />

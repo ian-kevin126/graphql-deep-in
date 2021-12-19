@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { memo } from 'react'
 
-function BookList() {
-  return <div>BookList</div>
+function BookList(props) {
+  const { books } = props
+  return (
+    <ul>{books && books.map((item) => <li key={item.id}>{item.name}</li>)}</ul>
+  )
 }
 
-export default BookList
+export default memo(BookList)
