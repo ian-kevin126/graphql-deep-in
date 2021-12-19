@@ -32,6 +32,25 @@ const ADD_BOOK = gql`
   }
 `
 
+const BOOK_DETAIL = gql`
+  query bookDetail($id: ID!) {
+    book(id: $id) {
+      name
+      id
+      genre
+      author {
+        id
+        name
+        age
+        books {
+          name
+          id
+        }
+      }
+    }
+  }
+`
+
 // compose was removed from React Apollo 3 (see the Breaking Changes). Now, to use compose, use lodash's flowRight.
 
 function App() {
