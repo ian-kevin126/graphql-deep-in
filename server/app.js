@@ -2,8 +2,11 @@ const express = require('express')
 const { graphqlHTTP } = require('express-graphql')
 const schema = require('./schema/schema')
 const mongoose = require('mongoose')
+const cors = require('cors')
 
 const app = express()
+
+app.use(cors())
 
 // 连接MongoDB
 mongoose.connect('mongodb://127.0.0.1:27017/graphql_deep_in', {
